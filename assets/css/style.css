@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #e5e5e5;
+    color: #000000;
 }
 
 header {
@@ -60,4 +61,52 @@ footer input {
 footer input::placeholder {
     color: #000000;
     font-style: italic;
+}
+
+nav {
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    height: 100px;
+}
+
+nav div {
+    line-height: 20px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: #000000;
+    font-weight: 400;
+    background-color: #ffffff;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.fixed0 {
+    height: 4vh;
+    background-color: #e5e5e5;
+    width: 100%;
+    position: fixed;
+    top: 11vh;
+    left: 0;
+}
+
+.fixed1 {
+    background-color: #e5e5e5;
+    height: 4vh;
+    width: 100%;
+    position: fixed;
+    bottom: 11vh;
+    left: 0;
+}
+
+nav div b {
+    color: #aaaaaa;
+}
+
+nav div span {
+    font-weight: 700;
 }
