@@ -1,4 +1,4 @@
-let nome, statusCode;
+let nome, statusCode, texto = "Qual seu lindo nome?";
 
 const divMsg = document.getElementById("mensagens");
 
@@ -13,7 +13,6 @@ function enviarMsg() {
 }
 
 function tipoMsg (mensagem) {
-    divMsg.innerHTML = "";
     if (mensagem.type === `message`) {
         divMsg.innerHTML += `<div data-test="message">
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
@@ -28,6 +27,7 @@ function tipoMsg (mensagem) {
 }
 
 function exibirMsg(mensagem) {
+    divMsg.innerHTML = "";
     mensagem.forEach(tipoMsg);
     divMsg.lastChild.scrollIntoView(true);
 }
@@ -57,13 +57,13 @@ function sucessoLogin(sucesso) {
 function erroLogin(erro) {
     statusCode = erro.response.status;
     if (statusCode === 400) {
-        alert("Esse nome já está em uso !");
+        texto = "Esse nome já está em uso ! Insira outro";
         login();
     }
 }
 
 function login() {
-    nome = { name: `${prompt("Qual seu lindo nome?")}` };
+    nome = { name: `${prompt(`${texto}`)}` };
 
     const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/participants`, nome);
 
