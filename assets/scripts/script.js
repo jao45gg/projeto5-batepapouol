@@ -14,13 +14,13 @@ function enviarMsg() {
 
 function tipoMsg (mensagem) {
     if (mensagem.type === `message`) {
-        divMsg.innerHTML += `<div>
+        divMsg.innerHTML += `<div data-test="message">
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
         ${mensagem.to}</span>: ${mensagem.text}
         </div>`;
     }
     else {
-        divMsg.innerHTML += `<div class="cinza">
+        divMsg.innerHTML += `<div class="cinza" data-test="message">
         <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
         </div>`;
     }
