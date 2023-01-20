@@ -2,25 +2,17 @@ let nome, statusCode;
 
 const divMsg = document.getElementById("mensagens");
 
-function sucessoEnvio(mensagem) {
-    buscarMensagens();
-}
-
-function erroEnvio(mensagem) {
-    window.location.reload();
-}
-
 function enviarMsg() {
     const input = document.querySelector(`input`).value;
 
     const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/messages`,
         { from: `${nome.name}`, to: `Todos`, text: `${input}`, type: `message` });
 
-    promisse.then(sucessoEnvio);
-    promisse.catch(erroEnvio);
+    promisse.then(sucessoEnvio => buscarMensagens());
+    promisse.catch(erroEnvio => window.location.reload());
 }
 
-function tipoMsg(mensagem) {
+function tipoMsg (mensagem) {
     if (mensagem.type === `message`) {
         divMsg.innerHTML += `<div>
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
@@ -28,7 +20,7 @@ function tipoMsg(mensagem) {
         </div>`;
     }
     else {
-        divMsg.innerHTML += `<div>
+        divMsg.innerHTML += `<div class="cinza">
         <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
         </div>`;
     }
@@ -36,15 +28,11 @@ function tipoMsg(mensagem) {
 
 function exibirMsg(mensagem) {
     mensagem.forEach(tipoMsg);
-}
-
-function filterMsg(message) {
-    if (message.type === `message` || message.type === `status`)
-        return true;
+    divMsg.lastChild.scrollIntoView(true);
 }
 
 function processarMensagens(mensagens) {
-    const message = mensagens.data.filter(filterMsg);
+    const message = mensagens.data.filter(message => message.type === `message` || message.type === `status`);
     exibirMsg(message);
 }
 
@@ -61,7 +49,7 @@ function sucessoLogin(sucesso) {
     statusCode = sucesso.status;
     if (statusCode === 200) {
         setInterval(manterConexao, 5000);
-        setInterval(buscarMensagens, 100000);
+        setInterval(buscarMensagens, 3000);
     }
 }
 

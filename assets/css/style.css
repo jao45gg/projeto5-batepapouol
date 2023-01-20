@@ -66,7 +66,6 @@ footer input::placeholder {
 nav {
     margin-top: 15vh;
     margin-bottom: 15vh;
-    height: 100px;
 }
 
 nav div {
@@ -109,4 +108,8 @@ nav div b {
 
 nav div span {
     font-weight: 700;
+}
+
+.cinza {
+    background-color: #DCDCDC;
 }
