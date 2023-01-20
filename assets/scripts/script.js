@@ -13,6 +13,7 @@ function enviarMsg() {
 }
 
 function tipoMsg (mensagem) {
+    divMsg.innerHTML = "";
     if (mensagem.type === `message`) {
         divMsg.innerHTML += `<div data-test="message">
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
@@ -42,7 +43,7 @@ function buscarMensagens() {
 }
 
 function manterConexao() {
-    const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/status`, nome);
+    axios.post(`https://mock-api.driven.com.br/api/v6/uol/status`, nome);
 }
 
 function sucessoLogin(sucesso) {
