@@ -4,6 +4,8 @@ const divMsg = document.getElementById("mensagens");
 
 const sucessCode = 200, errorCode = 400, timeConnect = 5000, timeSearch = 3000;
 
+const pagReload = () => window.location.reload();
+
 function enviarMsg() {
     const input = document.querySelector(`input`).value;
 
@@ -11,18 +13,23 @@ function enviarMsg() {
         { from: `${nome.name}`, to: `Todos`, text: `${input}`, type: `message` });
 
     promisse.then(buscarMensagens);
-    promisse.catch(window.location.reload);
+    promisse.catch(pagReload);
 }
 
-function tipoMsg (mensagem) {
+function tipoMsg(mensagem) {
     if (mensagem.type === `message`) {
         divMsg.innerHTML += `<div data-test="message">
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
         ${mensagem.to}</span>: ${mensagem.text}
         </div>`;
-    } else {
-        divMsg.innerHTML += `<div class="cinza" data-test="message">
+    } else if (mensagem.type === `status`) {
+        divMsg.innerHTML += `<div class="statusMsg" data-test="message">
         <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
+        </div>`;
+    } else {
+        divMsg.innerHTML += `<div class="privateMsg" data-test="message">
+        <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> reservadamente para&nbsp; <span>
+        ${mensagem.to}</span>: ${mensagem.text}
         </div>`;
     }
 }
@@ -34,7 +41,8 @@ function exibirMsg(mensagem) {
 }
 
 function processarMensagens(mensagens) {
-    const message = mensagens.data.filter(Msg => Msg.type === `message` || Msg.type === `status`);
+    const message = mensagens.data.filter(Msg => Msg.type === `message` || Msg.type === `status`
+        || (Msg.type === `private_message` & (Msg.from === nome || Msg.to === nome)));
     exibirMsg(message);
 }
 

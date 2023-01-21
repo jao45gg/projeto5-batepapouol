@@ -110,6 +110,10 @@ nav div span {
     font-weight: 700;
 }
 
-.cinza {
+.statusMsg {
     background-color: #DCDCDC;
+}
+
+.privateMsg {
+    background-color: #FFDEDE;
 }
