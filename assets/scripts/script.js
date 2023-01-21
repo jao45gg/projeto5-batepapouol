@@ -2,14 +2,16 @@ let nome, statusCode, texto = "Qual seu lindo nome?";
 
 const divMsg = document.getElementById("mensagens");
 
+const sucessCode = 200, errorCode = 400, timeConnect = 5000, timeSearch = 3000;
+
 function enviarMsg() {
     const input = document.querySelector(`input`).value;
 
     const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/messages`,
         { from: `${nome.name}`, to: `Todos`, text: `${input}`, type: `message` });
 
-    promisse.then(sucessoEnvio => buscarMensagens());
-    promisse.catch(erroEnvio => window.location.reload());
+    promisse.then(buscarMensagens);
+    promisse.catch(window.location.reload);
 }
 
 function tipoMsg (mensagem) {
@@ -18,8 +20,7 @@ function tipoMsg (mensagem) {
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
         ${mensagem.to}</span>: ${mensagem.text}
         </div>`;
-    }
-    else {
+    } else {
         divMsg.innerHTML += `<div class="cinza" data-test="message">
         <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
         </div>`;
@@ -33,7 +34,7 @@ function exibirMsg(mensagem) {
 }
 
 function processarMensagens(mensagens) {
-    const message = mensagens.data.filter(message => message.type === `message` || message.type === `status`);
+    const message = mensagens.data.filter(Msg => Msg.type === `message` || Msg.type === `status`);
     exibirMsg(message);
 }
 
@@ -48,22 +49,23 @@ function manterConexao() {
 
 function sucessoLogin(sucesso) {
     statusCode = sucesso.status;
-    if (statusCode === 200) {
-        setInterval(manterConexao, 5000);
-        setInterval(buscarMensagens, 3000);
+    if (statusCode === sucessCode) {
+        setInterval(manterConexao, timeConnect);
+        setInterval(buscarMensagens, timeSearch);
     }
 }
 
 function erroLogin(erro) {
     statusCode = erro.response.status;
-    if (statusCode === 400) {
+    if (statusCode === errorCode) {
         texto = "Esse nome já está em uso ! Insira outro";
         login();
     }
 }
 
 function login() {
-    nome = { name: `${prompt(`${texto}`)}` };
+    const str = prompt(`${texto}`);
+    nome = { name: `${str}` };
 
     const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/participants`, nome);
 
