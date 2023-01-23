@@ -40,7 +40,7 @@ function exibirMsg(mensagem) {
 }
 
 function processarMensagens(mensagens) {
-    const message = mensagens.data.filter(Msg => Msg.type === `message` || Msg.type === `status`
+    const message = mensagens.data.filter(Msg => !(Msg.type === `private_message`)
         || (Msg.type === `private_message` && (Msg.from === nome.name || Msg.to === nome.name)));
     exibirMsg(message);
 }
