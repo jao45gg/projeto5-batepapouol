@@ -11,7 +11,6 @@ function enviarMsg() {
 
     const promisse = axios.post(`https://mock-api.driven.com.br/api/v6/uol/messages`,
         { from: `${nome.name}`, to: `Todos`, text: `${input}`, type: `message` });
-
     promisse.then(buscarMensagens);
     promisse.catch(pagReload);
 }
@@ -42,7 +41,7 @@ function exibirMsg(mensagem) {
 
 function processarMensagens(mensagens) {
     const message = mensagens.data.filter(Msg => Msg.type === `message` || Msg.type === `status`
-        || (Msg.type === `private_message` & (Msg.from === nome || Msg.to === nome)));
+        || (Msg.type === `private_message` && (Msg.from === nome.name || Msg.to === nome.name)));
     exibirMsg(message);
 }
 
