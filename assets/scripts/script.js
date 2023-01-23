@@ -25,7 +25,7 @@ function tipoMsg(mensagem) {
         divMsg.innerHTML += `<div class="statusMsg" data-test="message">
         <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
         </div>`;
-    } else {
+    } else if (mensagem.from === nome.name || mensagem.to === nome.name) {
         divMsg.innerHTML += `<div class="privateMsg" data-test="message">
         <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> reservadamente para&nbsp; <span>
         ${mensagem.to}</span>: ${mensagem.text}
@@ -33,16 +33,10 @@ function tipoMsg(mensagem) {
     }
 }
 
-function exibirMsg(mensagem) {
-    divMsg.innerHTML = "";
-    mensagem.forEach(tipoMsg);
-    divMsg.lastChild.scrollIntoView(true);
-}
-
 function processarMensagens(mensagens) {
-    const message = mensagens.data.filter(Msg => !(Msg.type === `private_message`)
-        || (Msg.type === `private_message` && (Msg.from === nome.name || Msg.to === nome.name)));
-    exibirMsg(message);
+    divMsg.innerHTML = "";
+    mensagens.data.forEach(tipoMsg);
+    divMsg.lastChild.scrollIntoView(true);
 }
 
 function buscarMensagens() {
