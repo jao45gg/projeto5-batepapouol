@@ -15,27 +15,27 @@ function enviarMsg() {
     promisse.catch(pagReload);
 }
 
-function tipoMsg(mensagem) {
-    if (mensagem.type === `message`) {
-        divMsg.innerHTML += `<div data-test="message">
-        <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> para&nbsp; <span>
-        ${mensagem.to}</span>: ${mensagem.text}
-        </div>`;
-    } else if (mensagem.type === `status`) {
-        divMsg.innerHTML += `<div class="statusMsg" data-test="message">
-        <b>(${mensagem.time})&nbsp;</b><span>${mensagem.from}&nbsp;</span>${mensagem.text}
-        </div>`;
-    } else if (mensagem.from === nome.name || mensagem.to === nome.name) {
-        divMsg.innerHTML += `<div class="privateMsg" data-test="message">
-        <b>(${mensagem.time})&nbsp;</b> <span>${mensagem.from}&nbsp;</span> reservadamente para&nbsp; <span>
-        ${mensagem.to}</span>: ${mensagem.text}
-        </div>`;
-    }
-}
-
 function processarMensagens(mensagens) {
     divMsg.innerHTML = "";
-    mensagens.data.forEach(tipoMsg);
+
+    mensagens.data.forEach(Msg => {
+        if (Msg.type === `message`) {
+            divMsg.innerHTML += `<div data-test="message">
+            <b>(${Msg.time})&nbsp;</b> <span>${Msg.from}&nbsp;</span> para&nbsp; <span>
+            ${Msg.to}</span>: ${Msg.text}
+            </div>`;
+        } else if (Msg.type === `status`) {
+            divMsg.innerHTML += `<div class="statusMsg" data-test="message">
+            <b>(${Msg.time})&nbsp;</b><span>${Msg.from}&nbsp;</span>${Msg.text}
+            </div>`;
+        } else if (Msg.from === nome.name || Msg.to === nome.name) {
+            divMsg.innerHTML += `<div class="privateMsg" data-test="message">
+            <b>(${Msg.time})&nbsp;</b> <span>${Msg.from}&nbsp;</span> reservadamente para&nbsp; <span>
+            ${Msg.to}</span>: ${Msg.text}
+            </div>`;
+        }
+    });
+    
     divMsg.lastChild.scrollIntoView(true);
 }
 
