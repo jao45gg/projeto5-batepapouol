@@ -59,6 +59,7 @@ function sucessoLogin(sucesso) {
     statusCode = sucesso.status;
     if (statusCode === sucessCode) {
         setInterval(manterConexao, timeConnect);
+        buscarMensagens();
         setInterval(buscarMensagens, timeSearch);
     }
 }
